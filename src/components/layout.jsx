@@ -2,6 +2,7 @@ import Navbar from "@/components/navbar";
 import styles from "@/styles/layout.module.css";
 import loaderGif from "../../public/loader.gif";
 import { useLoader } from "@/context/loader-context";
+import { Footer } from "./Footer";
 
 export default function Layout({ children }) {
   const {showLoader} = useLoader();
@@ -12,7 +13,7 @@ export default function Layout({ children }) {
         <Navbar />
       </header>
       <section className={styles.appBody}>{children}</section>
-      <footer className={styles.appFooter}>Footer</footer>
+      <Footer className={styles.appFooter}/>
       {showLoader && (
         <div className={styles.appLoader}>
           <div
