@@ -2,7 +2,7 @@ import Navbar from "@/components/navbar";
 import styles from "@/styles/layout.module.css";
 import loaderGif from "../../public/loader.gif";
 import { useLoader } from "@/context/loader-context";
-import { Footer } from "./Footer";
+import Footer from "@/components/footer";
 
 export default function Layout({ children }) {
   const {showLoader} = useLoader();
