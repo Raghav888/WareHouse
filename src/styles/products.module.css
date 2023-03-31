@@ -1,0 +1,61 @@
+.cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-auto-rows: auto;
+    gap: 1rem;
+    margin-left: 8rem;
+    margin-top: 2rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+    padding: 0.5rem;
+}
+
+.cardImage {
+    border-radius: 1rem;
+    max-inline-size: 100%;
+    block-size: auto;
+    height: 100%;
+    width: 100%;
+}
+
+.cardHeader {
+    height: 3rem;
+    font-size: 2rem;
+    margin: 0 auto;
+}
+
+.cardBody {
+    flex: 1;
+    font-size: 1.25rem;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.cardFooter {
+    height: 2rem;
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardQuantity>input {
+    height: 1.5rem;
+    width: 4rem;
+}
+
+.cardSubmit>button {
+    height: 2rem;
+    border-radius: 7px;
+    width: 5rem;
+    background: #007bff;
+    color: white;
+    border: none;
+    margin: 0 0.5rem;
+    font-size: 1.2rem;
+}
+.input{
+    text-align: center;
+}

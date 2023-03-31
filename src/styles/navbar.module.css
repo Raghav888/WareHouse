@@ -1,0 +1,28 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: gray;
+    height: 100%;
+    padding: 5px;
+}
+
+.navItems {
+    display: flex;
+    margin-right: 3rem;
+}
+
+.navItem {
+    margin: 0 2rem;
+}
+
+.link{
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.logo{
+    margin-left: 4rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
