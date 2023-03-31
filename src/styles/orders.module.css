@@ -1,0 +1,19 @@
+.orderPageTitle {
+  padding: 2rem 0 0 2rem;
+}
+
+.tableData {
+  padding: 2rem;
+}
+
+.table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.row {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}

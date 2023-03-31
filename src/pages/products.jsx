@@ -4,11 +4,11 @@ import { useLoader } from "@/context/loader-context";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  const {setShowLoader} = useLoader();
+  const { setShowLoader } = useLoader();
 
   const fetchProducts = () => {
     setShowLoader(true);
-    
+
     const productsResponse = [];
     for (let i = 0; i < 20; i++) {
       const imageUrl = "https://picsum.photos/150/100";
@@ -22,7 +22,7 @@ export default function Products() {
       });
     }
 
-    setTimeout(()=> {
+    setTimeout(() => {
       setShowLoader(false);
     }, 5000);
 
@@ -61,14 +61,14 @@ export default function Products() {
                 <div className={styles.cardQuantity}>
                   Quantity:{" "}
                   <input
-                  className={styles.input}
+                    className={styles.input}
                     type="number"
                     value={quantity}
                     onChange={(e) => updateQuantity(id, e.target.value)}
                   />
                 </div>
                 <div className={styles.cardSubmit}>
-                  <button  onClick={(e) => updateProduct(id, quantity)}>
+                  <button onClick={(e) => updateProduct(id, quantity)}>
                     Update
                   </button>
                 </div>
