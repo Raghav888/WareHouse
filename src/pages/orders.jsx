@@ -3,56 +3,63 @@ import { useLoader } from "@/context/loader-context";
 import styles from "@/styles/orders.module.css";
 
 export default function Orders() {
-  const [products, setProducts] = useState([]);
+  const API_URL = `https://dloddoqiie.execute-api.us-east-1.amazonaws.com/default/cart`;
+
+  const [orders, setOrders] = useState([]);
   const { setShowLoader } = useLoader();
 
-  const fetchProducts = () => {
+  const fetchOrders = async () => {
     setShowLoader(true);
 
-    const productsResponse = [];
-    for (let i = 0; i < 20; i++) {
-      productsResponse.push({
-        id: i,
-        name: `Product-${i + 1}`,
-        address: "India",
-      });
-    }
-
-    setTimeout(() => {
+    try {
+      const response = await fetch(API_URL);
+      const responseData = await response.json();
+      const rows = responseData?.data ?? [];
+      setOrders(rows);
+    } catch (error) {
+      console.log(error);
+      setOrders([]);
+    } finally {
       setShowLoader(false);
-    }, 5000);
-
-    setProducts(productsResponse);
+    }
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchOrders();
   }, []);
 
   return (
-    <div>
-      <div className={styles.orderPageTitle}>
-        <h2>Recent Orders</h2>
-      </div>
-      <div className={styles.tableData}>
-        <table className={styles.table}>
-          <tr>
-            <th className={styles.row}>Id</th>
-            <th className={styles.row}>Product Name</th>
-            <th className={styles.row}>Address</th>
-          </tr>
-
-          {products.map(({ id, name, address }) => {
-            return (
+    <>
+      {orders.length > 0 ? (
+        <>
+          <div className={styles.orderPageTitle}>
+            <h2>Recent Orders</h2>
+          </div>
+          <div className={styles.tableData}>
+            <table className={styles.table}>
               <tr>
-                <th className={styles.row}>{id}</th>
-                <th className={styles.row}>{name}</th>
-                <th className={styles.row}>{address}</th>
+                <th className={styles.row}>Id</th>
+                <th className={styles.row}>Product Name</th>
+                <th className={styles.row}>Address</th>
               </tr>
-            );
-          })}
-        </table>
-      </div>
-    </div>
+
+              {orders.map(({ id, productName, address }) => {
+                return (
+                  <tr key={id}>
+                    <th className={styles.row}>{id}</th>
+                    <th className={styles.row}>{productName}</th>
+                    <th className={styles.row}>{address}</th>
+                  </tr>
+                );
+              })}
+            </table>
+          </div>
+        </>
+      ) : (
+        <div className={styles.dataNotFound}>
+          <h1>Orders Not Available</h1>
+        </div>
+      )}
+    </>
   );
 }

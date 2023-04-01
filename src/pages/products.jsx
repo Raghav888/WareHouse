@@ -3,30 +3,25 @@ import styles from "@/styles/products.module.css";
 import { useLoader } from "@/context/loader-context";
 
 export default function Products() {
+  const API_URL = `https://xi3mxeszjj.execute-api.us-east-1.amazonaws.com/default/items`;
+
   const [products, setProducts] = useState([]);
   const { setShowLoader } = useLoader();
 
-  const fetchProducts = () => {
+  const fetchProducts = async () => {
     setShowLoader(true);
 
-    const productsResponse = [];
-    for (let i = 0; i < 20; i++) {
-      const imageUrl = "https://picsum.photos/150/100";
-      productsResponse.push({
-        id: i,
-        name: `Product-${i + 1}`,
-        description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis illo possimus asperiores laboriosam fugiat",
-        quantity: Math.floor(Math.random() * 10),
-        imageUrl,
-      });
-    }
-
-    setTimeout(() => {
+    try {
+      const response = await fetch(API_URL);
+      const responseData = await response.json();
+      const rows = responseData?.data ?? [];
+      setProducts(rows);
+    } catch (error) {
+      console.log(error);
+      setProducts([]);
+    } finally {
       setShowLoader(false);
-    }, 5000);
-
-    setProducts(productsResponse);
+    }
   };
 
   const updateQuantity = (id, quantity) => {
@@ -37,8 +32,20 @@ export default function Products() {
     );
   };
 
-  const updateProduct = (id, quantity) => {
-    fetchProducts();
+  const updateProduct = async (id, product) => {
+    setShowLoader(true);
+
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        mode: "cors",
+        body: JSON.stringify(product),
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      fetchProducts();
+    }
   };
 
   useEffect(() => {
@@ -46,37 +53,51 @@ export default function Products() {
   }, []);
 
   return (
-    <div>
-      <div className={styles.cardsContainer}>
-        {products.map(({ id, name, quantity, imageUrl }) => {
-          return (
-            <div key={id} className={styles.card}>
-              <div className={styles.cardBody}>
-                <div>
-                  <img className={styles.cardImage} src={imageUrl} />
+    <>
+      {products.length > 0 ? (
+        <div className={styles.cardsContainer}>
+          {products.map(({ id, productName, quantity, imageURL }) => {
+            return (
+              <div key={id} className={styles.card}>
+                <div className={styles.cardBody}>
+                  <div>
+                    <img
+                      className={styles.cardImage}
+                      src={imageURL}
+                      alt="Image not Found"
+                    />
+                  </div>
+                </div>
+                <div className={styles.cardHeader}>{productName}</div>
+                <div className={styles.cardFooter}>
+                  <div className={styles.cardQuantity}>
+                    Quantity:{" "}
+                    <input
+                      className={styles.input}
+                      type="number"
+                      value={quantity}
+                      onChange={(e) => updateQuantity(id, e.target.value)}
+                    />
+                  </div>
+                  <div className={styles.cardSubmit}>
+                    <button
+                      onClick={(e) =>
+                        updateProduct(id, { productName, quantity, imageURL })
+                      }
+                    >
+                      Update
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className={styles.cardHeader}>{name}</div>
-              <div className={styles.cardFooter}>
-                <div className={styles.cardQuantity}>
-                  Quantity:{" "}
-                  <input
-                    className={styles.input}
-                    type="number"
-                    value={quantity}
-                    onChange={(e) => updateQuantity(id, e.target.value)}
-                  />
-                </div>
-                <div className={styles.cardSubmit}>
-                  <button onClick={(e) => updateProduct(id, quantity)}>
-                    Update
-                  </button>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className={styles.dataNotFound}>
+          <h1>Products Not Available</h1>
+        </div>
+      )}
+    </>
   );
 }

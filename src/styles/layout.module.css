@@ -35,7 +35,8 @@
 }
 
 .loaderBody {
+  background-repeat: no-repeat;
+  background-clip: padding-box;
   width: 100px;
   height: 100px;
-  background: green;
 }

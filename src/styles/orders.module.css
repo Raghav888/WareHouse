@@ -17,3 +17,8 @@
   text-align: left;
   padding: 8px;
 }
+
+.dataNotFound {
+  margin-top: 1rem;
+  text-align: center;
+}

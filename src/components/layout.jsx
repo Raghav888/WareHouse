@@ -17,12 +17,9 @@ export default function Layout({ children }) {
       {showLoader && (
         <div className={styles.appLoader}>
           <div
+            className={styles.loaderBody}
             style={{
               backgroundImage: `url(${loaderGif.src})`,
-              backgroundRepeat: "no-repeat",
-              backgroundClip: "padding-box",
-              width: "100px",
-              height: "100px",
             }}
           ></div>
         </div>
