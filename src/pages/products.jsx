@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "@/styles/products.module.css";
 import { useLoader } from "@/context/loader-context";
+import Image from "next/image";
 
 export default function Products() {
   const API_URL = `https://xi3mxeszjj.execute-api.us-east-1.amazonaws.com/default/items`;
@@ -61,10 +62,12 @@ export default function Products() {
               <div key={id} className={styles.card}>
                 <div className={styles.cardBody}>
                   <div>
-                    <img
+                    <Image
                       className={styles.cardImage}
-                      src={imageURL}
-                      alt="Image not Found"
+                      src={imageURL} // Route of the image file
+                      height={300} // Desired size with correct aspect ratio
+                      width={300} // Desired size with correct aspect ratio
+                      alt="product img"
                     />
                   </div>
                 </div>
