@@ -57,7 +57,7 @@ export default function Products() {
     <>
       {products.length > 0 ? (
         <div className={styles.cardsContainer}>
-          {products.map(({ id, productName, quantity, imageURL }) => {
+          {products.map(({ id, productName, quantity, imageURL ,price}) => {
             return (
               <div key={id} className={styles.card}>
                 <div className={styles.cardBody}>
@@ -85,7 +85,7 @@ export default function Products() {
                   <div className={styles.cardSubmit}>
                     <button
                       onClick={(e) =>
-                        updateProduct(id, { productName, quantity, imageURL })
+                        updateProduct(id, { productName, quantity, imageURL,price })
                       }
                     >
                       Update
